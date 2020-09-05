@@ -1,0 +1,1 @@
+gau http://yahoo.in | antiburl | awk '{ print $4 }' | grep -E '(callback=|jsonp=|api=|id=|item=|page_id=|url=|from_url=|load_url=|file_url=|page_url=|file_name=|page=)' | qsreplace EnterYourCollabrater | concurl
