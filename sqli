@@ -1,1 +1,1 @@
-echo "mail.ru" | waybackurls | httpx -silent -timeout 2 -threads 400 | gf sqli | tee -a sqliurls.txt | jaeles scan -c 1000 -v -s ../../jaeles-signatures/fuzz/sqli/sql-error.yaml -U sqliurls.txt -o sqlires/
+echo "mail.ru" | gau | httpx -silent -timeout 2 -threads 400 | anew | gf sqli | tee -a sqliurls.txt | jaeles scan -c 1000 -v -s ../../jaeles-signatures/fuzz/sqli/sql-error.yaml -U sqliurls.txt -o sqlires/
