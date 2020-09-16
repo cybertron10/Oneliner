@@ -1,0 +1,2 @@
+findomain --output -t $1 
+cat $1.txt | httpx | anew live_domains_$1.txt | toslack
