@@ -1,6 +1,6 @@
 echo "Installing Golang"
-wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
-sudo tar -xvf go1.14.2.linux-amd64.tar.gz
+wget https://dl.google.com/go/go1.15.5.linux-amd64.tar.gz
+sudo tar -xvf go1.15.5.linux-amd64.tar.gz
 sudo mv go /usr/local
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
@@ -9,7 +9,7 @@ echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
 echo 'export GOPATH=$HOME/go'   >> ~/.bash_profile
 echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile
 source ~/.bash_profile
-sudo rm go1.14.2.linux-amd64.tar.gz
+sudo rm go1.15.5.linux-amd64.tar.gz
 echo "Installing Findomain"
 wget https://github.com/Edu4rdSHL/findomain/releases/latest/download/findomain-linux
 chmod +x findomain-linux
