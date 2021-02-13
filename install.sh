@@ -20,7 +20,7 @@ go get -v github.com/OWASP/Amass/v3/...
 go get -u github.com/tomnomnom/assetfinder
 go get -u github.com/tomnomnom/httprobe
 go get -u github.com/tomnomnom/anew
-GO111MODULE=auto go get -u -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+GO111MODULE=on go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
 GO111MODULE=on go get github.com/jaeles-project/jaeles
 git clone https://github.com/jaeles-project/jaeles-signatures
 git clone https://github.com/projectdiscovery/nuclei-templates
