@@ -26,7 +26,6 @@ git clone https://github.com/jaeles-project/jaeles-signatures
 git clone https://github.com/projectdiscovery/nuclei-templates
 git clone https://github.com/cybertron10/Mysignature
 go get -u github.com/tomnomnom/qsreplace
-GO111MODULE=auto go get -u -v github.com/projectdiscovery/subfinder/cmd/subfinder
 go get -u github.com/jaeles-project/gospider
 git clone https://github.com/gwen001/github-search
 go get github.com/hakluke/hakrawler
