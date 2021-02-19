@@ -46,16 +46,17 @@ echo "
                    +         Twitter: c0nqu3ror           +
                    -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 "
-for domain in $(cat root.txt); do
-findomain -t $1 -o
-subfinder -d $1 -o subfinder.txt
-assetfinder -subs-only $1 | tee -a assetfinder.txt
-cat *.txt | sort -u > alldomains
-rm *.txt
-cat alldomains | dnsx -o dnsdomains
-cat dnsdomains | httpx | tee -a finaldomains
-nuclei -c 1000 -v -l finaldomains -t ~/nuclei-templates/cves/ -o nucleicveresults 
-cat nucleicveresults | toslack
-jaeles scan -c 1000 -v -s ~/jaeles-signatures/cves/ -U finaldomains -o jaelescveresults/
-cat jaelescveresults/jaeles-summary.txt | toslack
+for domain in $(cat rootdomains); do
+findomain -t $domain -o
+subfinder -d $domain -o $domain.subfinder.txt
+assetfinder -subs-only $domain | tee -a $domain.assetfinder.txt
 done
+cat *.txt | sort -u | anew alldomains | tee -a newdomains
+cat newdomains | toslack
+rm *.txt
+cat newdomains | dnsx -o dnsnewdomains
+cat dnsnewdomains | httpx | tee -a finalnewdomains
+nuclei -c 1000 -v -l finalnewdomains -t ~/nuclei-templates/cves/ -o nucleicveresults 
+cat nucleicveresults | toslack
+jaeles scan -c 1000 -v -s ~/jaeles-signatures/cves/ -U finalnewdomains -o jaelescveresults/
+cat jaelescveresults/jaeles-summary.txt | toslack
