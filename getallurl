@@ -1,0 +1,4 @@
+getallurl(){
+gau $1 > urls.txt;cat urls.txt | grep "?" | unfurl --unique format %s://%d%p > base.txt; cat base.txt | parallel -j 4 grep {} -m5 urls.txt | tee allurls
+rm urls.txt base.txt
+}
