@@ -1,0 +1,1 @@
+find . -maxdepth 2 -name "*.txt"  | sed 's/\.txt$//' | cut -d "/" -f 3
