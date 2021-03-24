@@ -41,4 +41,3 @@ git clone https://github.com/1ndianl33t/Gf-Patterns
 sudo mv ~/Gf-Patterns/*.json ~/.gf
 GO111MODULE=on go get -u -v github.com/lc/gau
 GO111MODULE=on go get -u github.com/projectdiscovery/chaos-client/cmd/chaos
-export CHAOS_KEY="f286eddccad5d2001cf46b5485371cdd65b0e0e1da5a774cee0bba0378d741f2"
