@@ -1,2 +1,3 @@
 sed 's/^/https:\/\//' file.txt
 find . -name '*.txt' -exec cat {} \; | anew targets.txt
+awk -F\. '{print $(NF-1) FS $NF}' file - Get domains from subdomain list
