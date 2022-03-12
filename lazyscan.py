@@ -68,7 +68,7 @@ def __perform_scan__(query_type,p_name,a=0):
     output.close()
     status=process.wait()
     if int(process_data.find("could not find the package"))!=-1:
-        process_data = 'Invaliid Package'
+        process_data = 'Invalid Package'
     else:
         pass
     return process_data
