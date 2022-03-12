@@ -13,7 +13,7 @@ html_begin = "<html><head><title>APP Analysis Report </title></head><body><h1 st
 inspiration = "Automation"
 
 def welcome():
-        __banner__='''\\
+        __banner__='''\
                                                                                                                                                                                
                                                                                                                                                                                
 LLLLLLLLLLL                                                                                             SSSSSSSSSSSSSSS                                                        
