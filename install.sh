@@ -38,3 +38,6 @@ git clone https://github.com/1ndianl33t/Gf-Patterns
 sudo mv ~/Gf-Patterns/*.json ~/.gf
 GO111MODULE=on go get -u -v github.com/lc/gau
 go install -v github.com/projectdiscovery/chaos-client/cmd/chaos@latest
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+rm google-chrome-stable_current_amd64.deb
