@@ -1,3 +1,5 @@
+apt install python3-pip
+pip3 install uro
 echo "Installing Golang"
 wget https://dl.google.com/go/go1.17.8.linux-amd64.tar.gz
 sudo tar -xvf go1.17.8.linux-amd64.tar.gz
