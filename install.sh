@@ -43,3 +43,4 @@ go install -v github.com/projectdiscovery/chaos-client/cmd/chaos@latest
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
