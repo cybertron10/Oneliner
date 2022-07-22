@@ -1,63 +1,8 @@
-echo "
-                                      010                                       
-                                      010                                       
-                            000000000 010 000000000                             
-                       00000000000000 010 00000000000000                        
-                    00000000000000000 010 00000000000000000                     
-                 00000000000000       010        0000000000000                  
-               00000000000       0    010    0          0000000000                
-             00000000          00             00           000000000              
-           00000000           000             000            00000000            
-          00000000           0000             0000             00000000          
-         0000000             0000   1111111   0000              00000000         
-       0000000                0000111111111110000                0000000        
-       000000                 0011111111111111100                 0000000       
-      000000                   11111111111111111                   0000000      
-     000000                   1111111111111111111                   000000      
-     000000                  111111111111111111111                   000000     
-    000000                  11111111111111111111111                  000000     
-    000000         0000000011111111111111111111111110000000           00000     
-    00000       00000000001111111111111111111111111110000000000       000000    
-00000000000000 00000000000111111111111111111111111111100000000000 000000000000000
-00000000000000           11111111111111111111111111111            000000000000000
-    00000                11111111111111111111111111111                000000000
-    000000         00000001111111111111111111111111111000000          00000000
-    000000       0000000 11111111111111111111111111111 00000000      00000000
-     000000    0000000   11111111111111111111111111111   0000000     0000000
-     000000    00         111111111111111111111111111         00    0000000
-      000000            00001111111111111111111111100000           0000000
-       0000000        00000001111111111111111111110000000         0000000
-        0000000      000000  111111111111111111111   000000     00000000
-         0000000    000        11111111111111111        000    0000000
-          00000000                 111111111                 0000000
-            000000000                                      0000000
-             0000000000                                 00000000
-                00000000000           010           0000000000
-                  000000000000000     010     00000000000000
-                     0000000000000000 010 0000000000000000
-                         000000000000 010 0000000000000
-                              0000000 010 0000000
-                                      010
-                                      010
-                   -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-                   +      ..| Sub_Analyser v1.0 |..       +
-                   -                                      -
-                   -              By: Suraj Bhosale       -
-                   +         Twitter: c0nqu3ror           +
-                   -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-"
-findomain -t $1 -o
-subfinder -d $1 -o subfinder.txt
-assetfinder -subs-only $1 | tee -a assetfinder.txt
-cat *.txt | sort -u > alldomains
+for domain in $(cat rootdomains); do
+findomain -t $domain -o
+subfinder -d $domain -o $domain.subfinder.txt
+assetfinder -subs-only $domain | tee -a $domain.assetfinder.txt
+done
+cat *.txt | sort -u | anew alldomains | tee -a newdomains
 rm *.txt
-cat alldomains | dnsx -o dnsdomains
-cat dnsdomains | httpx | tee -a finaldomains
-nuclei -c 1000 -v -l finaldomains -t ~/nuclei-templates/cves/ -o nucleicveresults.txt
-
-gau $1 | httpx -status-code -threads 500 | grep 200 | awk '{print $1}'| grep -v -i ".jpg\|.jpeg\|.gif\|.css\|.tif\|.tiff\|.png|.ttf\|.woff\|.woff2\|.ico\|.pdf\|.woff2\|.svg\|.js" | qsreplace payload | anew allurls
-gospider -s https://$1 -d 16 -a -c 250 | tee gospider
-cat gospider | grep -oP "http(s)?://((?i)(([a-zA-Z0-9]{1}|[_a-zA-Z0-9]{1}[_a-zA-Z0-9-]{0,61}[a-zA-Z0-9]{1})[.]{1})+)?$1.*" | tee extract
-cat extract | sort -u | grep -oP "http(s)?://((?i)(([a-zA-Z0-9]{1}|[_a-zA-Z0-9]{1}[_a-zA-Z0-9-]{0,61}[a-zA-Z0-9]{1})[.]{1})+)?$1.*" | tee gospiderurls
-rm gospider extract
-cat gospiderurls | httpx -status-code -threads 500 | grep 200 | awk '{print $1}'| grep -v -i ".jpg\|.jpeg\|.gif\|.css\|.tif\|.tiff\|.png|.ttf\|.woff\|.woff2\|.ico\|.pdf\|.woff2\|.svg\|.js" | qsreplace payload | anew allurls
+cat newdomains | httpx -t 1000 -o domain
