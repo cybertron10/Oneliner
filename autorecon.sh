@@ -1,62 +1,28 @@
-echo "
-                                      010                                       
-                                      010                                       
-                            000000000 010 000000000                             
-                       00000000000000 010 00000000000000                        
-                    00000000000000000 010 00000000000000000                     
-                 00000000000000       010        0000000000000                  
-               00000000000       0    010    0          0000000000                
-             00000000          00             00           000000000              
-           00000000           000             000            00000000            
-          00000000           0000             0000             00000000          
-         0000000             0000   1111111   0000              00000000         
-       0000000                0000111111111110000                0000000        
-       000000                 0011111111111111100                 0000000       
-      000000                   11111111111111111                   0000000      
-     000000                   1111111111111111111                   000000      
-     000000                  111111111111111111111                   000000     
-    000000                  11111111111111111111111                  000000     
-    000000         0000000011111111111111111111111110000000           00000     
-    00000       00000000001111111111111111111111111110000000000       000000    
-00000000000000 00000000000111111111111111111111111111100000000000 000000000000000
-00000000000000           11111111111111111111111111111            000000000000000
-    00000                11111111111111111111111111111                000000000
-    000000         00000001111111111111111111111111111000000          00000000
-    000000       0000000 11111111111111111111111111111 00000000      00000000
-     000000    0000000   11111111111111111111111111111   0000000     0000000
-     000000    00         111111111111111111111111111         00    0000000
-      000000            00001111111111111111111111100000           0000000
-       0000000        00000001111111111111111111110000000         0000000
-        0000000      000000  111111111111111111111   000000     00000000
-         0000000    000        11111111111111111        000    0000000
-          00000000                 111111111                 0000000
-            000000000                                      0000000
-             0000000000                                 00000000
-                00000000000           010           0000000000
-                  000000000000000     010     00000000000000
-                     0000000000000000 010 0000000000000000
-                         000000000000 010 0000000000000
-                              0000000 010 0000000
-                                      010
-                                      010
-                   -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-                   +      ..| Sub_Analyser v1.0 |..       +
-                   -                                      -
-                   -              By: Suraj Bhosale       -
-                   +         Twitter: c0nqu3ror           +
-                   -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-"
-for domain in $(cat rootdomains); do
-findomain -t $domain -o
-subfinder -d $domain -o $domain.subfinder.txt
-assetfinder -subs-only $domain | tee -a $domain.assetfinder.txt
-done
-cat *.txt | sort -u | anew alldomains | tee -a newdomains
-cat newdomains | toslack
-rm *.txt
-cat newdomains | dnsx -o dnsnewdomains
-cat dnsnewdomains | httpx | tee -a finalnewdomains
-nuclei -c 1000 -v -l finalnewdomains -t ~/nuclei-templates/cves/ -o nucleicveresults 
-cat nucleicveresults | toslack
-jaeles scan -c 1000 -v -s ~/jaeles-signatures/cves/ -U finalnewdomains -o jaelescveresults/
-cat jaelescveresults/jaeles-summary.txt | toslack
+echo "Automated Scan Started... Enumerating Subdomains" | notify
+/root/MoneyScope/MoneyScope.sh -a
+cat all_bbscope.txt | grep -v "github.com\|github.net\|shofify.com\|google.com"| anew scope
+axiom-scan scope -m findomain -o find.txt
+axiom-scan scope -m assetfinder -o ass.txt
+axiom-scan scope -m subfinder -o subs.txt
+cat find.txt ass.txt subs.txt | anew subdomains
+rm ass.txt subs.txt find.txt
+echo "Bruteforcing with DNScewl" | notify
+axiom-scan subdomains -m dnscewl -o dnscewl.txt
+axiom-scan dnscewl.txt -m dnsx -o dnssubs
+rm dnscewl.txt
+echo "Checking Live Subdomains with Htppx" | notify
+axiom-scan dnssubs -m httpx -o newhttpxsubs
+cat newhttpxsubs | anew oldhttpxsubs > newsubdomains
+mv newhttpxsubs oldhttpxsubs
+echo "New Subdomains Found" | notify
+#cat newsubdomains | notify
+echo "Starting Aquatone Scan"
+#axiom-scan newsubdomains -m aquatone -o aqua
+#cat aqua/aquatone_urls* | tee -a aquaurls
+echo "Nuclei Scan Started" | notify
+axiom-scan newsubdomains -m nuclei -t /home/op/nuclei-templates/cves/ -o nucleicve.txt
+#axiom-scan newsubdomains -m nuclei -t /home/op/nuclei-templates/exposed-panels/ -o exposedpanels.txt
+#axiom-scan newsubdomains -m nuclei -t /home/op/nuclei-templates/exposures/ -o exposures.txt
+#axiom-scan newsubdomains -m nuclei -t /home/op/nuclei-templates/takeovers/ -o takeovers.txt
+#axiom-scan newsubdomains -m nuclei -t /home/op/nuclei-templates/vulnerabilities/ -o vulnerabilities.txt
+echo "Scan Completed" | notify
