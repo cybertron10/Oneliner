@@ -1,9 +1,9 @@
 apt install python3-pip
 pip3 install uro
 echo "Installing Golang"
-wget https://dl.google.com/go/go1.22.0.linux-amd64.tar.gz
-tar -xvf go1.22.0.linux-amd64.tar.gz
-mv go /usr/local
+wget https://dl.google.com/go/go1.20.7.linux-amd64.tar.gz
+tar -xvf go1.20.7.linux-amd64.tar.gz
+sudo mv go /usr/local
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
@@ -11,7 +11,7 @@ echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
 echo 'export GOPATH=$HOME/go'   >> ~/.bash_profile
 echo 'export PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile
 source ~/.bash_profile
-rm go1.22.0.linux-amd64.tar.gz
+rm go1.20.7.linux-amd64.tar.gz
 echo "Installing Findomain"
 wget https://github.com/Edu4rdSHL/findomain/releases/latest/download/findomain-linux
 chmod +x findomain-linux
